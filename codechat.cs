@@ -2,58 +2,55 @@ using System;
 
 class Program
 {
-    const int MaxElements = 100;
+static void Main()
+{
+    int health = 100;
+    int score = 0;
 
-    static int CalculateSum(int[] numbers)
+    Console.WriteLine("Welcome to the Adventure Game!");
+    Console.WriteLine("You are in a dark forest.");
+
+    while (health > 0)
     {
-        int sum = 0;
-        foreach (int number in numbers)
-        {
-            sum += number;
-        }
-        return sum;
-    }
+        Console.WriteLine("\nOptions:");
+        Console.WriteLine("1. Go deeper into the forest.");
+        Console.WriteLine("2. Rest by the campfire.");
+        Console.WriteLine("3. Quit the game.");
 
-    static int[] GetNumbersFromUser(int count)
-    {
-        int[] numbers = new int[count];
-        Console.WriteLine($"Enter {count} integers:");
-
-        for (int i = 0; i < count; i++)
+        int choice;
+        Console.Write("Enter your choice: ");
+        if (int.TryParse(Console.ReadLine(), out choice))
         {
-            while (true)
+            if (choice == 1)
             {
-                Console.Write($"Enter integer {i + 1}: ");
-                if (int.TryParse(Console.ReadLine(), out numbers[i]))
-                {
-                    break;
-                }
-                Console.WriteLine("Invalid input. Please enter a valid integer.");
+                Console.WriteLine("You go farther into the forest and discover a treasure chest!");
+                score += 10;
+            }
+            else if (choice == 2)
+            {
+                Console.WriteLine("You rest by the campfire and regain 20 health.");
+                health += 20;
+            }
+            else if (choice == 3)
+            {
+                Console.WriteLine($"Thanks for playing! Your score: {score}");
+                return;
+            }
+            else
+            {
+                Console.WriteLine("Invalid choice. Try again.");
+            }
+
+            health -= 10;
+            if (health <= 0)
+            {
+                Console.WriteLine($"Game over. Your score: {score}");
             }
         }
-
-        return numbers;
-    }
-
-    static int GetNumberOfElements()
-    {
-        while (true)
+        else
         {
-            Console.Write($"Enter the number of elements (1-{MaxElements}): ");
-            if (int.TryParse(Console.ReadLine(), out int count) && count >= 1 && count <= MaxElements)
-            {
-                return count;
-            }
-            Console.WriteLine($"Invalid input. Please provide a number between 1 and {MaxElements}.");
+            Console.WriteLine("Invalid input. Please enter a valid number.");
         }
     }
-
-    static void Main()
-    {
-        int numberOfElements = GetNumberOfElements();
-        int[] numbers = GetNumbersFromUser(numberOfElements);
-        int total = CalculateSum(numbers);
-
-        Console.WriteLine($"Sum of the numbers: {total}");
-    }
+}
 }
